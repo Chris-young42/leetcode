@@ -16,5 +16,13 @@ var canFinish = function (numCourses, prerequisites) {
         return true;
       }
     }
+    colors[x] = 2;
+    return false;
   }
+  for (let i = 0; i < numCourses; i++) {
+    if (colors[i] === 0 && dfs(i)) {
+      return false;
+    }
+  }
+  return true;
 };
