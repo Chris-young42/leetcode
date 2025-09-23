@@ -3,9 +3,11 @@
  * @return {number[][]}
  */
 var permute = function (nums) {
+    //定义推入结果
   const result = [];
   const path = [];
   const used = new Array(nums.length).fill(false);
+//   设置回溯函数
   const backtrack = () => {
     if (path.length === nums.length) {
       result.push([...path]);
@@ -17,6 +19,7 @@ var permute = function (nums) {
       used[i] = true;
       path.push(nums[i]);
       backtrack();
+    //   删除下一个的路径
       path.pop();
       used[i] = false;
     }
