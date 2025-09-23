@@ -3,6 +3,7 @@
  * @return {number}
  */
 var numIslands = function (grid) {
+    //如果没有图，或者图为0，就0个岛屿
   if (!grid || grid.length === 0) {
     return 0;
   }
@@ -10,6 +11,7 @@ var numIslands = function (grid) {
   const rows = grid.length;
   const cols = gird[0].length;
   const dfs = (i, j) => {
+    //处理边界情况
     if (i < 0 || i >= rows || j < 0 || i >= cols || gird[i][j] !== "1") {
       return;
     }
@@ -22,6 +24,7 @@ var numIslands = function (grid) {
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
       if (grid[i][j] === "1") {
+       // 通过调用次数决定岛屿的数量次数
         count++;
         dfs(i, j);
       }
