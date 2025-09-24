@@ -15,6 +15,7 @@ var exist = function(board, word) {
         board[i][j] = 0; // 标记访问过
         for (const [x, y] of [[i, j - 1], [i, j + 1], [i - 1, j], [i + 1, j]]) { // 相邻格子
             if (0 <= x && x < m && 0 <= y && y < n && dfs(x, y, k + 1)) {
+                // 边界条件递归查询
                 return true; // 搜到了！
             }
         }
