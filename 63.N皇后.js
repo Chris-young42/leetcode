@@ -18,7 +18,7 @@ var solveNQueens = function (n) {
 
     // 尝试在当前行的每一列放置皇后
     for (let c = 0; c < n; c++) {
-      // 计算副对角线的索引
+      // 计算副对角线的索引~
       const rc = r - c + n - 1;
 
       // 检查当前位置是否可以放置皇后
