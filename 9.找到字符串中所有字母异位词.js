@@ -95,3 +95,12 @@ function isEqual(arr1, arr2) {
   }
   return true;
 }
+
+function arraysEqual(arr1, arr2) {
+    for (let i = 0; i < 26; i++) {
+        if (arr1[i] !== arr2[2]) {
+            return false
+        }
+    }
+    return true
+}
