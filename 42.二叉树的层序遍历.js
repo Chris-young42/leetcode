@@ -10,30 +10,47 @@
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var levelOrder = function (root) {
-  if (!root) {
-    return [];
-  }
-  const result = [];
-  const queue = [root];
-  while (queue.length > 0) {
-    const levelSize = queue.length;
-    const currentLevel = [];
-    for (let i = 0; i < levelSize; i++) {
-      const node = queue.shift();
-      currentLevel.push(node.val);
-      if (node.left) {
-        queue.push(node.left);
-      }
-      if (node.right) {
-        queue.push(node.right);
-      }
+var levelOrder = function(root) {
+    // 处理空树情况
+    if (!root) {
+        return [];
     }
-    result.push(currentLevel);
-  }
-  return result;
+    
+    // 存储结果的二维数组
+    const result = [];
+    // 队列用于BFS，初始加入根节点
+    const queue = [root];
+    
+    // 当队列不为空时继续遍历
+    while (queue.length > 0) {
+        // 当前层的节点数量
+        const levelSize = queue.length;
+        // 存储当前层的节点值
+        const currentLevel = [];
+        
+        // 遍历当前层的所有节点
+        for (let i = 0; i < levelSize; i++) {
+            // 出队一个节点
+            const node = queue.shift();
+            // 将节点值加入当前层数组
+            currentLevel.push(node.val);
+            
+            // 如果有左子节点，入队
+            if (node.left) {
+                queue.push(node.left);
+            }
+            // 如果有右子节点，入队
+            if (node.right) {
+                queue.push(node.right);
+            }
+        }
+        
+        // 将当前层的节点值数组加入结果
+        result.push(currentLevel);
+    }
+    
+    return result;
 };
-
 
 
  /**

@@ -24,4 +24,4 @@ LRUCache.prototype.put = function (key, value) {
     this.cache.delete(oldestKey);
   }
   this.cache.set(key, value);
-};
+}

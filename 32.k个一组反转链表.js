@@ -10,42 +10,55 @@
  * @param {number} k
  * @return {ListNode}
  */
-var reverseKGroup = function (head, k) {
-  const dummy = new ListNode(0);
-  dummy.next = head;
-  let prev = dummy; // 修正：prve → prev
-  while (true) {
-    let tail = prev;
-    // 检查剩余节点是否有k个
-    for (let i = 0; i < k; i++) {
-      tail = tail.next;
-      if (!tail) {
-        // 不足k个，直接返回结果
-        return dummy.next;
-      }
+var reverseKGroup = function(head, k) {
+    // 创建虚拟头节点，简化边界处理
+    const dummy = new ListNode(0);
+    dummy.next = head;
+    
+    // prev 指向每组翻转节点的前一个节点
+    let prev = dummy;
+    
+    while (true) {
+        // 检查剩余节点是否有 k 个
+        let tail = prev;
+        for (let i = 0; i < k; i++) {
+            tail = tail.next;
+            // 如果剩余节点不足 k 个，直接返回结果
+            if (!tail) {
+                return dummy.next;
+            }
+        }
+        
+        // 保存下一组的头节点
+        const nextGroupHead = tail.next;
+        
+        // 翻转当前 k 个节点，并获取翻转后的头节点
+        const [newHead, newTail] = reverseList(prev.next, tail);
+        
+        // 将翻转后的子链表与前后连接
+        prev.next = newHead;
+        newTail.next = nextGroupHead;
+        
+        // 移动 prev 到下一组的前一个节点（即当前组的尾节点）
+        prev = newTail;
     }
-    // 保存下一组的头节点
-    const nextGroupHead = tail.next;
-    // 翻转当前k个节点
-    const [newHead, newTail] = reverseList(prev.next, tail);
-    // 连接翻转后的链表
-    prev.next = newHead;
-    newTail.next = nextGroupHead;
-    // 移动prev到下一组的前一个节点
-    prev = newTail;
-  }
 };
 
-// 翻转从head到tail的链表，返回新的头和尾
+/**
+ * 翻转从 head 到 tail 的链表，并返回新的头和尾
+ */
 function reverseList(head, tail) {
-  let prev = null; // 修正：prve → prev
-  let curr = head;
-  while (prev !== tail) {
-    // 翻转到tail节点为止
-    const next = curr.next;
-    curr.next = prev; // 翻转指针
-    prev = curr; // 移动prev
-    curr = next; // 移动curr
-  }
-  return [tail, head]; // 原tail变新头，原head变新尾
+    let prev = null;
+    let curr = head;
+    
+    // 翻转直到处理完 tail 节点
+    while (prev !== tail) {
+        const next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+    }
+    
+    // 翻转后，原 tail 变成新 head，原 head 变成新 tail
+    return [tail, head];
 }
