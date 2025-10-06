@@ -40,5 +40,5 @@ var rightSideView = function(root) {
         }
     }
     
-    return result;
+    return result
 };

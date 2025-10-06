@@ -31,5 +31,5 @@ var kthSmallest = function (root, k) {
     root = root.right;
   }
   //返回当前节点的zhi
-  return root.val;
+  return root.val
 };
