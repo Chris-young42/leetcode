@@ -1,34 +1,63 @@
 /**
- * @param {character[][]} grid
- * @return {number}
+ * @param {character[][]} grid - 二维字符网格，'1' 是陆地，'0' 是水
+ * @return {number} - 岛屿的数量
  */
-var numIslands = function (grid) {
-    //如果没有图，或者图为0，就0个岛屿
-  if (!grid || grid.length === 0) {
-    return 0;
-  }
-  let count = 0;
-  const rows = grid.length;
-  const cols = gird[0].length;
-  const dfs = (i, j) => {
-    //处理边界情况
-    if (i < 0 || i >= rows || j < 0 || i >= cols || gird[i][j] !== "1") {
-      return;
+var numIslands = function(grid) {
+    // -----------------------------
+    // 1️⃣ 边界检查：防止输入为空
+    // -----------------------------
+    if (!grid || grid.length === 0) {
+        return 0;
     }
-    dfs(i - 1, j);
-    dfs(i + 1, j);
-    dfs(i, j - 1);
-    dfs(i, j + 1);
-  };
 
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      if (grid[i][j] === "1") {
-       // 通过调用次数决定岛屿的数量次数
-        count++;
-        dfs(i, j);
-      }
+    // -----------------------------
+    // 2️⃣ 初始化变量
+    // -----------------------------
+    let count = 0;                // 用来统计岛屿数量
+    const rows = grid.length;     // 网格的行数
+    const cols = grid[0].length;  // 网格的列数
+
+    // -----------------------------
+    // 3️⃣ 定义 DFS（深度优先搜索）函数
+    // -----------------------------
+    const dfs = (i, j) => {
+        // 👉 边界条件：
+        // 如果越界（i,j 位置不合法），或者当前不是陆地（不是 '1'）
+        // 就直接返回，不需要继续搜索。
+        if (i < 0 || i >= rows || j < 0 || j >= cols || grid[i][j] !== '1') {
+            return;
+        }
+
+        // 👉 标记当前格子为「已访问」
+        // 把当前陆地改为 '0'，表示“我已经走过了这块陆地”
+        // 防止之后重复计算
+        grid[i][j] = '0';
+
+        // 👉 继续递归搜索这块陆地的「四个方向」
+        // 因为岛屿的定义是上下左右相连的陆地
+        dfs(i - 1, j); // 上方
+        dfs(i + 1, j); // 下方
+        dfs(i, j - 1); // 左方
+        dfs(i, j + 1); // 右方
+    };
+
+    // -----------------------------
+    // 4️⃣ 遍历整个网格
+    // -----------------------------
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+
+            // 👉 如果当前位置是陆地（'1'）
+            // 说明发现了一个「新岛屿」！
+            if (grid[i][j] === '1') {
+                count++;    // 岛屿数量 +1
+                dfs(i, j);  // 用 DFS 把这个岛屿所有的陆地都标记为“已访问”
+            }
+        }
     }
-  }
-  return count;
+
+    // -----------------------------
+    // 5️⃣ 返回结果
+    // -----------------------------
+    return count;
 };
