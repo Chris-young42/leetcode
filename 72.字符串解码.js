@@ -9,7 +9,7 @@ var decodeString = function (s) {
   for (const c of s) {
     if ("a" <= c && c <= "z") {
       res += c;
-    } else if ("a" <= c && c <= "9") {
+    } else if ("0" <= c && c <= "9") {
       k = k * 10 + parseInt(c);
     } else if (c === "[") {
       stack.push([res, k]);
