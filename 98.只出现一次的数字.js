@@ -15,3 +15,12 @@ function singleNumber(nums) {
     if (val === 1) return key;
   }
 }
+
+
+var singleNumber = function(nums) {
+    let ans = 0;
+    for (const x of nums) {
+        ans ^= x;
+    }
+    return ans;
+};
