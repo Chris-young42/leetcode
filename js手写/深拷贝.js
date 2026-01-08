@@ -8,7 +8,7 @@ let obj = {
 function deepClone(obj,map = new Map()) {
   if (!(obj instanceof Object)) return obj;
   let newObj = Array.isArray(obj) ? [] : {};
-
+ 
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       if (map.has(obj[key])) {
