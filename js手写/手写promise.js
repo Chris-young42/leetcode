@@ -8,7 +8,7 @@ class MyPromise {
     this.reason = undefined;
     this.onFullfilledCallbacks = [];
     this.onRejectedCallbacks = [];
-    const resovle = (value) => {
+    const resolve = (value) => {
       if (this.status === MyPromise.PENDING) {
         this.status = MyPromise.FULFILLED;
         this.value = value;
@@ -23,7 +23,7 @@ class MyPromise {
       }
     };
     try {
-      exector(resovle, reject);
+      exector(resolve, reject);
     } catch (error) {
       reject(error);
     }
@@ -38,14 +38,14 @@ class MyPromise {
         : (reason) => {
             throw reason;
           };
-    const newPromise = new MyPromise((resovle, reject) => {
+    const newPromise = new MyPromise((resolve, reject) => {
       if (this.status === MyPromise.FULFILLED) {
         setTimeout(() => {
           try {
             const result = onFullfilled(this.value);
             result instanceof MyPromise
-              ? result.then(resovle, reject)
-              : resovle(result);
+              ? result.then(resolve, reject)
+              : resolve(result);
           } catch (error) {
             reject(error);
           }
@@ -54,10 +54,10 @@ class MyPromise {
       if (this.status === MyPromise.REJECTED) {
         setTimeout(() => {
           try {
-            const result = onRejected(this.value);
+            const result = onRejected(this.reason);
             result instanceof MyPromise
-              ? result.then(resovle, reject)
-              : resovle(result);
+              ? result.then(resolve, reject)
+              : resolve(result);
           } catch (error) {
             reject(error);
           }
@@ -69,8 +69,20 @@ class MyPromise {
             try {
               const result = onFullfilled(this.value);
               result instanceof MyPromise
-                ? result.then(resovle, reject)
-                : resovle(result);
+                ? result.then(resolve, reject)
+                : resolve(result);
+            } catch (error) {
+              reject(error);
+            }
+          }, 0);
+        });
+        this.onRejectedCallbacks.push(() => {
+          setTimeout(() => {
+            try {
+              const result = onRejected(this.reason);
+              result instanceof MyPromise
+                ? result.then(resolve, reject)
+                : resolve(result);
             } catch (error) {
               reject(error);
             }
@@ -82,6 +94,13 @@ class MyPromise {
     return newPromise;
   }
 
-  static resovle() {}
-  static reject() {}
+  static resolve(value) {
+    return value instanceof MyPromise
+      ? value
+      : new MyPromise((resolve) => resolve(value));
+  }
+  static reject(reason) {
+    return new MyPromise((_, reject) => reject(reason));
+  }
 }
+
