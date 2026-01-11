@@ -1,8 +1,8 @@
-function debounce(fn, time,) {
+function debounce(fn, time) {
   let timer = null;
-  let context = this;
   return function (...args) {
     if (timer) clearTimeout(timer);
+    let context = this;
     timer = setTimeout(() => {
       fn.apply(context, ...args);
     }, time);
