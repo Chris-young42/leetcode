@@ -16,6 +16,7 @@ class Scheduler {
       return;
     }
     const { promiseCreator, resolve, reject } = this.queue.shift();
+    this.running++;
     promiseCreator()
       .then((res) => resolve(res))
       .catch((err) => reject(err))

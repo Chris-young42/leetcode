@@ -25,7 +25,6 @@ Function.prototype.myApply = function (context, args) {
 
 Function.prototype.myBind = function (context, ...args) {
   const self = this;
-
   return function boundFn(...innerArgs) {
     // 如果通过 new 调用，则 this 指向实例对象
     const isNew = this instanceof boundFn;

@@ -1,5 +1,6 @@
 function inheritPrototype(Child, Parent) {
   const prototype = Object.create(Parent.prototype);
+  
   prototype.constructor = Child;
   Child.prototype = prototype;
 }
