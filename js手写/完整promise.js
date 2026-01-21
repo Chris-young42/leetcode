@@ -70,13 +70,15 @@ class MyPromise {
           });
         });
         this.rejectCallbacks.push(() => {
-          try {
-            const item = onRejected(this.fail);
-            // 传入 resolvePromise 集中处理
-            resolvePromise(item, resolve, reject, promiseNext);
-          } catch (error) {
-            reject(error);
-          }
+          queueMicrotask(() => {
+            try {
+              const item = onRejected(this.fail);
+              // 传入 resolvePromise 集中处理
+              resolvePromise(item, resolve, reject, promiseNext);
+            } catch (error) {
+              reject(error);
+            }
+          });
         });
       }
     });
@@ -112,7 +114,7 @@ class MyPromise {
       (fail) => {
         fn();
         throw fail;
-      }
+      },
     );
   }
 
@@ -138,7 +140,7 @@ class MyPromise {
             (err) => {
               reject(err);
               return;
-            }
+            },
           );
         }
       }
@@ -159,7 +161,7 @@ class MyPromise {
             (err) => {
               reject(err);
               return;
-            }
+            },
           );
         }
       }
@@ -170,7 +172,7 @@ class MyPromise {
 const resolvePromise = (x, resolve, reject, promiseNext) => {
   if (x === promiseNext) {
     const err = new TypeError(
-      "Uncaught (in promsie) TypeError:detected for promise #<Promsie>"
+      "Uncaught (in promsie) TypeError:detected for promise #<Promsie>",
     );
     return reject(err);
   }
