@@ -38,3 +38,46 @@ var combinationSum = function (candidates, target) {
   dfs(target, [], 0);
   return ans;
 };
+/**
+ * @param {number[]} candidates - 候选数字数组
+ * @param {number} target - 目标和
+ * @return {number[][]} - 所有符合条件的组合
+ */
+function combinationSum(candidates, target) {
+    // 1. 所有核心变量都定义在外部（回溯函数外）
+    const result = []; // 最终结果数组
+    const sortedCandidates = [...candidates].sort((a, b) => a - b); // 排序后的候选数组
+    const aim = target; // 目标值
+    const path = []; // 重点：把当前组合path也提取到外部定义（替代调用时的[]）
+
+    // 2. 回溯函数：仅依赖外部变量，参数进一步简化（甚至可以无参，这里保留start/sum更清晰）
+    const backtrack = (start, sum) => {
+        // 终止条件1：和等于目标值，保存组合
+        if (sum === aim) {
+            result.push([...path]); // 仍需拷贝，避免后续修改影响结果
+            return;
+        }
+        // 终止条件2：和超过目标值，剪枝返回
+        if (sum > aim) {
+            return;
+        }
+
+        // 遍历候选数组
+        for (let i = start; i < sortedCandidates.length; i++) {
+            const num = sortedCandidates[i];
+            // 剪枝：当前数字大于剩余需要的和，直接终止循环
+            if (num > aim - sum) break;
+
+            // 选择：向外部的path中添加当前数字
+            path.push(num);
+            // 递归：仅传递start和sum（path用外部的）
+            backtrack(i, sum + num);
+            // 回溯：从外部的path中移除最后一个数字
+            path.pop();
+        }
+    };
+
+    // 3. 调用回溯函数：仅传start和sum，path用外部定义的空数组
+    backtrack(0, 0);
+    return result;
+}                                     
