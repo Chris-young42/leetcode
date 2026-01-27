@@ -5,7 +5,7 @@
  * @return {boolean} - 是否能上完所有课程（没有环就能上完）
  */
 var canFinish = function(numCourses, prerequisites) {
-
+         
     // 1️⃣ 构建图（邻接表）
     // g[i] 表示：课程 i 的后续课程有哪些（从 i 可以到的节点）
     const g = Array.from({ length: numCourses }, () => []);

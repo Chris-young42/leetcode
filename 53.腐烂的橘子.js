@@ -39,7 +39,7 @@ var orangesRotting = function(grid) {
                 if (0 <= i && i < m && 0 <= j && j < n && grid[i][j] === 1) {
                     // 如果是新鲜橘子，被腐烂影响
                     fresh--;          // 新鲜橘子数量减1
-                    grid[i][j] = 2;   // 变为腐烂状态
+                    grid[i][j] = 2;   // 变为腐烂状态  
                     q.push([i, j]);   // 这一橘子将参与下一轮传播
                 }
             }
