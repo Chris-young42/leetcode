@@ -59,13 +59,13 @@ const merge = (l1, l2) => {
   // 遍历两个链表，取较小的节点依次拼接
   while (l1 && l2) {
     if (l1.val < l2.val) {
-      cur.next = l1;   // 接上 l1
-      l1 = l1.next;    // l1 指针后移
+      cur.next = l1; // 接上 l1
+      l1 = l1.next; // l1 指针后移
     } else {
-      cur.next = l2;   // 接上 l2
-      l2 = l2.next;    // l2 指针后移
+      cur.next = l2; // 接上 l2
+      l2 = l2.next; // l2 指针后移
     }
-    cur = cur.next;     // cur 指针后移
+    cur = cur.next; // cur 指针后移
   }
 
   // 把剩余的节点直接接上（只有一个链表会剩下）
@@ -73,4 +73,20 @@ const merge = (l1, l2) => {
 
   // 返回合并后链表的头结点
   return dummyHead.next;
+};
+var mergeKLists = function (lists) {
+  return lists
+    .reduce((acc, list) => {
+      while (list) {
+        acc.push(list);
+        list = list.next;
+      }
+      return acc;
+    }, [])
+    .sort((a, b) => a.val - b.val)
+    .reduceRight((mergedList, currentNode) => {
+      currentNode.next = mergedList;
+      mergedList = currentNode;
+      return mergedList;
+    }, null);
 };
