@@ -21,7 +21,7 @@ var longestPalindrome = function (s) {
   // 所有单个字符本身都是回文串，比如 "a"、"b"、"c"
   for (let i = 0; i < n; i++) {
     dp[i][i] = true;
-  }
+  }                      
 
   /**
    * l 表示子串的长度，最小为 2
