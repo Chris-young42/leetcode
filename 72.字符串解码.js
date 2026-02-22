@@ -1,6 +1,7 @@
 /**
  * @param {string} s
  * @return {string}
+ * s = "3[a2[bc]]"
  */
 var decodeString = function(s) {
     const stack = []; // 模拟递归
