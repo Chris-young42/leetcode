@@ -5,17 +5,16 @@ let obj = {
   },
 };
 
-function deepClone(obj,map = new Map()) {
+function deepClone(obj, map = new Map()) {
   if (!(obj instanceof Object)) return obj;
+  if (map.has(obj)) {
+    return map.get(obj);
+  }
   let newObj = Array.isArray(obj) ? [] : {};
- 
+  map.set(obj, newObj);
   for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      if (map.has(obj[key])) {
-        newObj[key] = map.get(obj[key]);
-      } else {
-        newObj[key] = deepClone(obj[key],map);
-      }
+    if (obj.hasOwnProperty(key)) {
+      newObj[key] = deepClone(obj[key], map);
     }
   }
   return newObj;

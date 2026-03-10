@@ -57,8 +57,8 @@ var wordBreak = function (s, wordDict) {
   }
 
   /**
-   * 5. 返回最终结果
    *    f[n] 表示整个字符串 s[0..n-1] 是否可以拆分成字典中的单词组合
+   * 5. 返回最终结果 
    */
   return f[n];
 };
