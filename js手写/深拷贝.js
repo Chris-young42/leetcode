@@ -28,7 +28,6 @@ function deepClone(obj, map = new Map()) {
   if (map.has(obj)) {
     return map.get(obj);
   }
-
   const newObj = Array.isArray(obj) ? [] : {};
   map.set(obj, newObj);
 
