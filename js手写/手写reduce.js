@@ -6,3 +6,4 @@ Array.prototype.Myreduce = function (callback, initialValue) {
   }
   return accumulator
 };
+ 

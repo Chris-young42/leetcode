@@ -1,29 +1,34 @@
-class EventEmitter {
+class EventBus {
   constructor() {
-    this.event = {};
+    this.events = {};
   }
 
-  emit(type, cb) {
-    if (!this.event[type]) {
-      this.event[type] = [cb];
-    } else {
-      this.event[type].push(cb);
+  // 订阅
+  on(type, fn) {
+    if (!this.events[type]) {
+      this.events[type] = [];
     }
+    this.events[type].push(fn);
   }
 
-  on(type, ...args) {
-    if (!this.event[type]) {
-      return;
-    } else {
-      this.event[type].forEach((item) => item(...args));
-    }
+  // 发布
+  emit(type, ...args) {
+    if (!this.events[type]) return;
+    this.events[type].forEach(fn => fn(...args));
   }
 
-  off(type, cb) {
-    if (!this.event[type]) {
-      return;
-    } else {
-      this.event[type] = this.event[type].filter((item) => item != cb);
-    }
+  // 取消订阅
+  off(type, fn) {
+    if (!this.events[type]) return;
+    this.events[type] = this.events[type].filter(item => item !== fn);
+  }
+
+  // 只执行一次
+  once(type, fn) {
+    const wrapper = (...args) => {
+      fn(...args);
+      this.off(type, wrapper);
+    };
+    this.on(type, wrapper);
   }
 }
