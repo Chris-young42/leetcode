@@ -33,3 +33,19 @@ var kthSmallest = function (root, k) {
   //返回当前节点的zhi
   return root.val
 };
+var kthSmallest = function (root, k) {
+    let count = 0
+    let res = null
+    const elementKthTree = (node) => {
+        if (!node) return
+        elementKthTree(node.left)
+        count++
+        if (count === k) {
+            res = node.val
+            return
+        }
+        elementKthTree(node.right)
+    }
+    elementKthTree(root)
+    return res
+};
